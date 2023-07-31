@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
+body {
+    font-family: 'Inter';
+    color: white;
+
+}
+
+
+.main { 
+    background-color: rgb(20, 20, 20, 0.70);
+    width: 1474px;
+    height: 846px;
+    border-radius: 20px;
+    margin-top: 50px;
+    
+}
+
+.navbar {
+    padding: 15px;
+    max-height: 80px;
+    
+    display: flex;
+    background-color: #191B1E;
+    justify-content: space-around;
+    
+}
+
+#twojepojazdy {
+    font-size: 30px;
+    padding: 0px 15px;
+    margin-left: 15px;
+    font-weight: 700;
+}
+
+button {
+    background-color: #ED2020;
+    color: white;
+    height: 80px;
+    width: 80px;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Inter';
+    font-size: 30px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.search-navbar {
+    background-color: #141414;
+    border-radius: 20px;
+    display: flex;
+    border: solid 1px #FFFFFF;
+    align-items: center;
+    width: 520px;
+    margin-left: 15px;
+}
+
+.title-navbar {
+
+    background-color: #141414;
+    border: solid 1px #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    width: 650px;
+
+}
+
+#wyszukajpojazd {
+    font-size: 30px;
+   
+
+    margin-left: 30px;
+}
+
+input {
+    margin-left: 15px;
+    font-family: 'Inter';
+    background-color: transparent;
+    border: 0px;
+    outline: 0px;
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+}
+
+.garages { 
+    display: flex;
+    margin-top: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#nav-vehicle {
+    background-color: #131313;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    border-bottom: solid 1px white;
+    max-height: 55px;
+}
+
+#vehicle {
+    background-color: #191B1E;
+    width: 660px;
+    flex-direction: row;
+    margin-left: 37px;
+    margin-right: 40px;
+    margin-bottom: 25px;
+    transition: 0.3s;
+
+}
+
+#vehicle:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 32px -10px white;
+}
+
+#body-vehicle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  #body-vehicle p {
+    flex: 1; /* Rozciągnij wszystkie elementy równomiernie */
+    display: flex;
+    justify-content: center; /* Wyśrodkuj zawartość w pionie */
+    align-items: center; /* Wyśrodkuj zawartość w poziomie */
+  }
+  
+  #body-vehicle img,
+  #body-vehicle i {
+    margin-right: 5px; /* Odstęp między ikoną a tekstem */
+  }
+
+#vehicleplate { 
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#vehiclename { 
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seavibe_garaz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/2b59923dc7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <center>
+    <div class="main">
+        <div class="navbar">
+            <div class="title-navbar">
+                
+                <p id="twojepojazdy"><i class="fa-solid fa-warehouse"></i> Twoje pojazdy</p>
+            </div>
+            <div class="search-navbar">
+                
+                <p id="wyszukajpojazd"><i class="fa-solid fa-magnifying-glass"></i><input type="text" name="" id="search-input" placeholder="Wyszukaj pojazd"></p>
+            </div>
+            <button onclick="Exit()"><i style="color: white;" class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="garages">
+            <!-- <div id="vehicle">
+                <div id="nav-vehicle">
+                    
+                    <p><i style="font-size: 25px;" class="fa-solid fa-car"></i> <span id="vehiclename">Chevrolet Camaro</span></p>
+                    
+                    <p><i style="font-size: 25px;"class="fa-solid fa-key"></i> <span id="vehicleplate">NPOL 4309</span></p>
+                </div>
+                <div id="body-vehicle">
+                    <p id="enginestatus"><img src="engine.png" width="25px" height="25px"> 85.7%</p>
+                    <p id="vehiclestatus"><i style="color: #4FF800" class="fa-solid fa-wrench"></i> 99.7%</p>
+                    <p id="fuel"><i style="color: #FFC700;" class="fa-solid fa-gas-pump"></i> 100%</p>
+                </div>
+            </div> -->
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        var odholownik = false
+        var garaz = false
+
+        $(".main").fadeOut(100);
+
+
+        function Exit() {
+            console.log("exit")
+            $(".main").fadeOut(100)
+            $.post("https://seavibe_garage/zamknij")
+        }
+
+        function createVehicleDiv(vehiclename, plate, enginestatus, vehiclestatus, fuel, number, model) {
+    const vehicleDiv = document.createElement("div");
+    vehicleDiv.id = "vehicle";
+    vehicleDiv.classList.add(number); // Use classList.add() to add class
+
+    const navVehicleDiv = document.createElement("div");
+    navVehicleDiv.id = "nav-vehicle";
+
+    navVehicleDiv.innerHTML = `
+        <p><i style="font-size: 25px;" class="fa-solid fa-car"></i> <span id="vehiclename">` + vehiclename + `</span></p>
+        <p><i style="font-size: 25px;" class="fa-solid fa-key"></i> <span class="vehicleplate">` + plate + `</span></p>
+        <p id="vehiclemodel" style="display: none;">` + model + ` </p>
+    `;
+
+    vehicleDiv.appendChild(navVehicleDiv);
+
+    const bodyVehicleDiv = document.createElement("div");
+    bodyVehicleDiv.id = "body-vehicle";
+
+    bodyVehicleDiv.innerHTML = `
+        <p id="enginestatus"><img src="engine.png" width="25px" height="25px"> ` + enginestatus + `%</p>
+        <p id="vehiclestatus"><i style="color: #4FF800" class="fa-solid fa-wrench"></i> ` + vehiclestatus + `%</p>
+        <p id="fuel"><i style="color: #FFC700;" class="fa-solid fa-gas-pump"></i> ` + fuel + `%</p>
+    `;
+
+    vehicleDiv.appendChild(bodyVehicleDiv);
+
+    const garagesDiv = document.querySelector('.garages');
+    garagesDiv.appendChild(vehicleDiv);
+
+    vehicleDiv.addEventListener('click', function (e) {
+        const plateElement = vehicleDiv.querySelector('.vehicleplate');
+        const rejestracjatext = plateElement.textContent;
+
+        if (odholownik) {
+            console.log("odholownik");
+            $.post('https://seavibe_garage/odholujfurke', JSON.stringify({ rejestracja: rejestracjatext }));
+        }
+
+        if (garaz) {
+            console.log("garaz");
+            $.post('https://seavibe_garage/wyciagnijfure', JSON.stringify({ rejestracja: rejestracjatext }));
+        }
+
+        setTimeout(function () {
+            $.post("https://seavibe_garage/zamknij");
+        }, 500);
+    });
+}
+
+
+    
+
+
+        function filterVehicles() {
+                const searchInput = document.getElementById('search-input').value.toLowerCase();
+                const vehicleDivs = document.querySelectorAll('.garages #vehicle');
+
+                vehicleDivs.forEach(vehicleDiv => {
+                    const vehicleName = vehicleDiv.querySelector('#vehiclename').innerText.toLowerCase();
+                    if (vehicleName.includes(searchInput)) {
+                        vehicleDiv.style.display = 'block';
+                    } else {
+                        vehicleDiv.style.display = 'none';
+                    }
+                });
+            }
+
+        document.getElementById('search-input').addEventListener('input', filterVehicles);
+
+        window.addEventListener("message", function (event) {
+            var v = event.data;
+            const vehicleDivs = document.querySelectorAll('div[id="vehicle"]');
+            switch (v.action) {
+            case "addcar":
+                createVehicleDiv(v.name, v.model, v.engine, v.body, v.fuel, v.number, v.model);
+                break;
+            case "cleargarage":
+            vehicleDivs.forEach((div) => div.remove());
+                break;
+            case "hide":
+                garaz = false
+                $(".main").fadeOut(200);
+                break;
+            case "show":
+                garaz = true
+                $(".main").fadeIn(200);
+                break;
+            case "addcarodholownik":
+                createVehicleDiv(v.name, v.model, v.engine, v.body, v.fuel, v.number, v.model);
+                break;
+            case "clearodholownik":
+                vehicleDivs.forEach((div) => div.remove());
+                break;
+            case "hideodholownik":
+                odholownik = false
+                $(".main").fadeOut(200);
+                break;
+            case "showodholownik":
+                $(".main").fadeIn(200);
+                odholownik = true
+                break;
+            }
+            
+        })
+    </script>
+</center>
+</body>
+</html>
