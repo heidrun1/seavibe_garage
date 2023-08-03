@@ -9,10 +9,6 @@ end
 
 closeGUI()
 
-RegisterNetEvent("seavibe_garage:usunaltko", function(vehicle)
-	ESX.Game.DeleteVehicle(vehicle)
-end)
-
 function OtworzGaraz()
 	local playerPed = PlayerPedId()
 	if IsPedInAnyVehicle(playerPed) then
