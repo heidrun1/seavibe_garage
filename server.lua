@@ -115,7 +115,6 @@ RegisterServerEvent("seavibe_garage:odholuj", function(rejestracja)
 	if PlayerMoney >= Cost then 
 	  local vehicle = FindVehicleByPlate(rejestracja)
 	  xPlayer.showNotification("Odholowałeś auto")
-	  TriggerClientEvent("seavibe_garage:usunaltko", -1 ,vehicle)
 	  xPlayer.removeMoney(Cost)
 	  TriggerEvent("seavibe_garage:updateState", rejestracja, "1")
 	else
